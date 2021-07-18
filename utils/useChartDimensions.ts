@@ -21,13 +21,13 @@ const combineChartDimensions = (dimensions: Dimensions) => {
   return {
     ...parsedDimensions,
     boundedHeight: Math.max(
-      parsedDimensions.height -
+      Number(parsedDimensions.height) -
         parsedDimensions.marginTop -
         parsedDimensions.marginBottom,
       0
     ),
     boundedWidth: Math.max(
-      parsedDimensions.width -
+      Number(parsedDimensions.width) -
         parsedDimensions.marginLeft -
         parsedDimensions.marginRight,
       0
