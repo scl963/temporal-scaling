@@ -11,10 +11,15 @@ const margin = { top: 20, right: 30, bottom: 30, left: 40 };
 
 export default function Home() {
   const randomWalkData = React.useMemo(() => generateRandomWalkData(), []);
+  const [renderCharts, setRenderCharts] = React.useState(false);
 
   React.useEffect(() => {
     if (!randomWalkData.length) return;
   }, [randomWalkData]);
+
+  React.useEffect(() => {
+    setRenderCharts(true);
+  });
 
   return (
     <div className={styles.container}>
@@ -26,7 +31,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1>Temporal Scaling</h1>
-        <LineChart data={randomWalkData} />
+        {renderCharts ? <LineChart data={randomWalkData} /> : null}
       </main>
     </div>
   );

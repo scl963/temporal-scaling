@@ -15,6 +15,8 @@ export const Axis = ({
 }) => {
   const xDomainString = xDomain.join("-");
   const xRangeString = xRange.join("-");
+  const yDomainString = yDomain.join("-");
+  const yRangeString = yRange.join("-");
 
   const [xTicks, yTicks] = React.useMemo(() => {
     const xScale = scaleLinear().domain(xDomain).range(xRange);
@@ -42,9 +44,7 @@ export const Axis = ({
     return [xTicks, yTicks];
     // Use domain and range strings rather than array references
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [xDomainString, xRangeString]);
-
-  console.log(xDomain, xRange);
+  }, [xDomainString, xRangeString, yDomainString, yRangeString]);
 
   return (
     <>
@@ -77,7 +77,7 @@ export const Axis = ({
           stroke="currentColor"
         />
         {yTicks.map(({ value, yOffset }) => (
-          <g key={value} transform={`translate(-6, ${-yOffset})`}>
+          <g key={value} transform={`translate(-6, ${-250 + yOffset})`}>
             <line x2="6" stroke="currentColor" />
             <text
               key={value}

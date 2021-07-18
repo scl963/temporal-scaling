@@ -53,7 +53,6 @@ export function useChartDimensions(
 
     const element = ref.current as unknown as HTMLElement;
     const resizeObserver = new ResizeObserver((entries) => {
-      console.log("in resize observer", entries);
       if (!Array.isArray(entries)) return;
       if (!entries.length) return;
 
@@ -65,10 +64,7 @@ export function useChartDimensions(
     });
     resizeObserver.observe(element);
 
-    return () => {
-      console.log("Cleaning up resize observer");
-      resizeObserver.unobserve(element);
-    };
+    return () => resizeObserver.unobserve(element);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
