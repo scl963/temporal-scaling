@@ -2,7 +2,7 @@ export function generateRandomWalkData() {
   const initialData = [{ x: 0, y: 0 }];
   let prevValue = 0;
 
-  for (let i = 1; i < 1000; i++) {
+  for (let i = 1; i < 100000; i++) {
     const rand = Math.random();
     let newVal = null;
 

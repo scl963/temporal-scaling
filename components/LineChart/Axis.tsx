@@ -21,7 +21,6 @@ export const Axis = ({
   const [xTicks, yTicks] = React.useMemo(() => {
     const xScale = scaleLinear().domain(xDomain).range(xRange);
     const yScale = scaleLinear().domain(yDomain).range(yRange);
-
     const width = xRange[1] - xRange[0];
     const height = yRange[1] - yRange[0];
     const pixelsPerTick = 30;

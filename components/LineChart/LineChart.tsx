@@ -32,7 +32,10 @@ export function LineChart({
   const yScale = React.useMemo(
     () =>
       scaleLinear()
-        .domain([Math.max(...data.map(({ y }) => y)) + 10, 0])
+        .domain([
+          Math.max(...data.map(({ y }) => y)),
+          Math.min(...data.map(({ y }) => y)),
+        ])
         .range([0, dms.boundedHeight]),
     [dms.boundedHeight, data]
   );
@@ -56,17 +59,21 @@ export function LineChart({
               height={dms.boundedHeight}
               fill="lavender"
             />
-            <g transform={`translate(${[0, dms.boundedHeight].join(",")})`}>
-              <Axis
-                xDomain={xScale.domain()}
-                xRange={xScale.range()}
-                yDomain={yScale.domain()}
-                yRange={yScale.range()}
-              />
-            </g>
-            <g>
-              <Line xScale={xScale} yScale={yScale} data={data} />
-            </g>
+            {data && (
+              <>
+                <g transform={`translate(${[0, dms.boundedHeight].join(",")})`}>
+                  <Axis
+                    xDomain={xScale.domain()}
+                    xRange={xScale.range()}
+                    yDomain={yScale.domain()}
+                    yRange={yScale.range()}
+                  />
+                </g>
+                <g>
+                  <Line xScale={xScale} yScale={yScale} data={data} />
+                </g>
+              </>
+            )}
           </g>
         </svg>
       </div>
