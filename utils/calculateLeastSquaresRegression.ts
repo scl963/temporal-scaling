@@ -1,3 +1,5 @@
+import { ChartData } from "../types";
+
 export function calculateLeastSquaresRegression(data: ChartData) {
     const numPoints = data.length;
     //   To future me, sorry for the reduce :(
