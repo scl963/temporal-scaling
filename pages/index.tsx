@@ -1,9 +1,9 @@
-import { select as d3Select } from "d3-selection";
 import Head from "next/head";
 import React, { ChangeEvent } from "react";
 import styles from "../styles/Home.module.css";
 import { generateRandomWalkData } from "../utils/generateRandomWalkData";
-import { LineChart } from "../components/LineChart/LineChart";
+import { LineChart } from "../components/Chart/LineChart";
+import { Scatterplot } from "../components/Chart/Scatterplot";
 
 type MeasurementOption = "1" | "2" | "5" | "10" | "20" | "50" | "100" | "200";
 
@@ -108,7 +108,7 @@ export default function Home() {
           </div>
         </div>
         <LineChart data={randomWalkData} />
-        <LineChart data={logTenGraphData} />
+        <Scatterplot data={logTenGraphData} />
       </main>
     </div>
   );
