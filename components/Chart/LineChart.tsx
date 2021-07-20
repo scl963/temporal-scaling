@@ -1,8 +1,10 @@
 import React from "react";
 import { Axis } from "./Axis";
-import { useChartDimensions } from "../../utils/useChartDimensions";
+import { useChartDimensions } from "../../hooks/useChartDimensions";
 import { scaleLinear } from "d3-scale";
 import { Line } from "./Line";
+import { useCreateScales } from "../../hooks/useCreateScales";
+import { ChartData } from "../../types";
 
 const chartSettings = {
   marginLeft: 75,
@@ -11,34 +13,9 @@ const chartSettings = {
   marginBottom: 25,
 };
 
-export function LineChart({
-  data,
-}: {
-  data: {
-    x: number;
-    y: number;
-  }[];
-}) {
+export function LineChart({ data }: { data: ChartData }) {
   const [ref, dms] = useChartDimensions(chartSettings);
-
-  const xScale = React.useMemo(
-    () =>
-      scaleLinear()
-        .domain([0, Math.max(...data.map(({ x }) => x))])
-        .range([0, dms.boundedWidth]),
-    [dms.boundedWidth, data]
-  );
-
-  const yScale = React.useMemo(
-    () =>
-      scaleLinear()
-        .domain([
-          Math.max(...data.map(({ y }) => y)),
-          Math.min(...data.map(({ y }) => y)),
-        ])
-        .range([0, dms.boundedHeight]),
-    [dms.boundedHeight, data]
-  );
+  const { xScale, yScale } = useCreateScales(data, dms);
 
   return (
     <div style={{ width: "75vw" }}>

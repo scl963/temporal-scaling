@@ -1,6 +1,9 @@
 import { scaleLinear } from "d3-scale";
 import React from "react";
-import { useChartDimensions } from "../../utils/useChartDimensions";
+import { useChartDimensions } from "../../hooks/useChartDimensions";
+import { useCreateScales } from "../../hooks/useCreateScales";
+import { ChartData } from "../../types";
+import { calculateLeastSquaresRegression } from "../../utils/calculateLeastSquaresRegression";
 import { Axis } from "./Axis";
 import { Line } from "./Line";
 
@@ -11,73 +14,15 @@ const chartSettings = {
   marginBottom: 25,
 };
 
-export function Scatterplot({
-  data,
-}: {
-  data: {
-    x: number;
-    y: number;
-  }[];
-}) {
+export function Scatterplot({ data }: { data: ChartData }) {
   const [ref, dms] = useChartDimensions(chartSettings);
-
-  const xScale = React.useMemo(
-    () =>
-      scaleLinear()
-        .domain([0, Math.max(...data.map(({ x }) => x))])
-        .range([0, dms.boundedWidth]),
-    [dms.boundedWidth, data]
-  );
-
-  const yScale = React.useMemo(
-    () =>
-      scaleLinear()
-        .domain([
-          Math.max(...data.map(({ y }) => y)),
-          Math.min(...data.map(({ y }) => y)),
-        ])
-        .range([0, dms.boundedHeight]),
-    [dms.boundedHeight, data]
-  );
+  const { xScale, yScale } = useCreateScales(data, dms);
 
   const points = React.useMemo(() => {
     return data.map(({ x, y }) => {
       return { x, y, scaledX: xScale(x), scaledY: yScale(y) };
     });
   }, [data, xScale, yScale]);
-
-  //   TODO: extract to separate file
-  // TODO: stop being lazy and create a reusable data type
-  function calculateLeastSquaresRegression(
-    data: {
-      x: number;
-      y: number;
-    }[]
-  ) {
-    const numPoints = data.length;
-    //   To future me, sorry for the reduce :(
-    const [xValuesSum, yValuesSum, sumXTimesY, sumXSquared, sumYSquared] =
-      data.reduce(
-        (a, b) => [
-          a[0] + b.x,
-          a[1] + b.y,
-          a[2] + b.x * b.y,
-          a[3] + b.x ** 2,
-          a[4] + b.y ** 2,
-        ],
-        [0, 0, 0, 0, 0]
-      );
-    // Slope equation m =  N Σ(xy) − ΣxΣy / N Σ(x**2) − (Σx)**2
-    const slopeEquationTop = numPoints * sumXTimesY - xValuesSum * yValuesSum;
-    const slopeEquationBottom = numPoints * sumXSquared - xValuesSum ** 2;
-    const slope = slopeEquationTop / slopeEquationBottom;
-
-    // Y intercept equation b =  Σy − m Σx / N
-    const yIntercept = (yValuesSum - slope * xValuesSum) / numPoints;
-    console.log(xValuesSum, yValuesSum);
-
-    return [slope, yIntercept];
-  }
 
   const [slope, yIntercept] = React.useMemo(() => {
     return calculateLeastSquaresRegression(data);

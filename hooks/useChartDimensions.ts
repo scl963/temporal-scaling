@@ -9,6 +9,8 @@ export type Dimensions = {
   height?: number;
 };
 
+export type CombinedChartDimensions = ReturnType<typeof combineChartDimensions>
+
 // Copied from https://wattenberger.com/blog/react-and-d3#sizing-responsivity
 const combineChartDimensions = (dimensions: Dimensions) => {
   const parsedDimensions = {
@@ -39,7 +41,7 @@ export function useChartDimensions(
   passedSettings: Dimensions
 ): [
   React.MutableRefObject<HTMLElement | undefined>,
-  ReturnType<typeof combineChartDimensions>
+  CombinedChartDimensions
 ] {
   const ref = React.useRef();
   const dimensions = combineChartDimensions(passedSettings);
