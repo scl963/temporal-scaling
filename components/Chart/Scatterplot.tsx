@@ -24,7 +24,7 @@ export function Scatterplot({ data }: { data: ChartData }) {
     });
   }, [data, xScale, yScale]);
 
-  const [slope, yIntercept] = React.useMemo(() => {
+  const { slope, yIntercept } = React.useMemo(() => {
     return calculateLeastSquaresRegression(data);
   }, [data]);
 

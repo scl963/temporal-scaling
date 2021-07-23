@@ -3,7 +3,7 @@ import { ChartData } from "../types";
 export function calculateLeastSquaresRegression(data: ChartData) {
     const numPoints = data.length;
     //   To future me, sorry for the reduce :(
-    const [xValuesSum, yValuesSum, sumXTimesY, sumXSquared, sumYSquared] =
+    const [xValuesSum, yValuesSum, sumXTimesY, sumXSquared] =
       data.reduce(
         (a, b) => [
           a[0] + b.x,
@@ -23,5 +23,5 @@ export function calculateLeastSquaresRegression(data: ChartData) {
     // Y intercept equation b =  Σy − m Σx / N
     const yIntercept = (yValuesSum - slope * xValuesSum) / numPoints;
 
-    return [slope, yIntercept];
+    return { slope, yIntercept };
   }
