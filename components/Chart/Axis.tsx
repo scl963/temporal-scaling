@@ -23,7 +23,7 @@ export const Axis = ({
     const yScale = scaleLinear().domain(yDomain).range(yRange);
     const width = xRange[1] - xRange[0];
     const height = yRange[1] - yRange[0];
-    const pixelsPerTick = 30;
+    const pixelsPerTick = 50;
     const numberOfTicksTargetX = Math.max(1, Math.floor(width / pixelsPerTick));
     const numberOfTicksTargetY = Math.max(
       1,
@@ -83,7 +83,7 @@ export const Axis = ({
               style={{
                 fontSize: "10px",
                 textAnchor: "start",
-                transform: "translateX(-15px)",
+                transform: "translate(-20px, 2.5px)",
               }}
             >
               {value}

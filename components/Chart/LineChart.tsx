@@ -16,6 +16,12 @@ const chartSettings = {
 export function LineChart({ data }: { data: ChartData }) {
   const [ref, dms] = useChartDimensions(chartSettings);
   const { xScale, yScale } = useCreateScales(data, dms);
+  const [mounted, setMounted] = React.useState(false);
+
+  // Prevent ssr from causing hydration mismatch
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <div style={{ width: "75vw" }}>
@@ -36,7 +42,7 @@ export function LineChart({ data }: { data: ChartData }) {
               height={dms.boundedHeight}
               fill="lavender"
             />
-            {data && (
+            {data && mounted && (
               <>
                 <g transform={`translate(${[0, dms.boundedHeight].join(",")})`}>
                   <Axis

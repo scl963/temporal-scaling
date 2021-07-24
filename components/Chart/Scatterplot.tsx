@@ -58,7 +58,7 @@ export function Scatterplot({ data }: { data: ChartData }) {
               height={dms.boundedHeight}
               fill="white"
             />
-            {data && (
+            {data && data.length > 1 && (
               <>
                 <g transform={`translate(${[0, dms.boundedHeight].join(",")})`}>
                   <Axis
