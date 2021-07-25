@@ -30,6 +30,8 @@ export default function Home() {
           <Image
             src={sedimentaryRock}
             alt="A sedimentary rock formation with many fractured layers of different colors, indicating deposition over a long period of time."
+            width={1024}
+            height={445}
           />
           <div className={styles.textWrapper}>
             <p>
