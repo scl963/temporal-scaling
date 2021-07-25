@@ -5,14 +5,13 @@ import coarseCoastline from "../public/fractal-coastline-100km.png";
 import fineCoastline from "../public/fractal-coastline-50km.png";
 import styles from "../styles/Home.module.css";
 import dynamic from "next/dynamic";
-import ChartSection from "../components/Chart/ChartSection";
 
-// const DynamicChartSection = dynamic(
-//   () => import("../components/Chart/ChartSection"),
-//   {
-//     ssr: false,
-//   }
-// );
+const DynamicChartSection = dynamic(
+  () => import("../components/Chart/ChartSection"),
+  {
+    ssr: false,
+  }
+);
 
 export default function Home() {
   return (
@@ -122,7 +121,7 @@ export default function Home() {
             mass extinctions (Foote 1994), cultural evolution (Perreault 2012),
             and carbon emissions (Kemp et al. 2015, Gingerich 2019).
           </p>
-          <ChartSection />
+          <DynamicChartSection />
         </article>
       </main>
     </>
