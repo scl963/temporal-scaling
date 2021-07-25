@@ -30,8 +30,6 @@ export default function Home() {
           <Image
             src={sedimentaryRock}
             alt="A sedimentary rock formation with many fractured layers of different colors, indicating deposition over a long period of time."
-            width={1024}
-            height={445}
           />
           <div className={styles.textWrapper}>
             <p>
@@ -65,8 +63,6 @@ export default function Home() {
                 overlaid on the coastline resulting in a coarse (and therefore smaller)
                 measurement and leaving out finer details."
                   loading="lazy"
-                  height={480}
-                  width={250}
                 />
                 <Image
                   src={fineCoastline}
@@ -74,8 +70,6 @@ export default function Home() {
                 with measuring sticks of 31 miles in length overlaid on the coastline,
                 resulting in a more precise (and longer) measurement of the overall length."
                   loading="lazy"
-                  height={480}
-                  width={250}
                 />
               </div>
             </div>
@@ -127,8 +121,6 @@ export default function Home() {
               scales to show the relationship between rates of change and the measurement duration.
               A best fit line slopes down and to the right, indicating that as the measurement duration increases,
               the rate of change seems to decrease."
-                width={480}
-                height={320}
                 loading="lazy"
               />
             </div>
