@@ -7,7 +7,7 @@ import { useCreateScales } from "../../hooks/useCreateScales";
 import { ChartData } from "../../types";
 
 const chartSettings = {
-  marginLeft: 75,
+  marginLeft: 25,
   marginRight: 25,
   marginTop: 25,
   marginBottom: 25,
@@ -24,7 +24,7 @@ export function LineChart({ data }: { data: ChartData }) {
   }, []);
 
   return (
-    <div style={{ width: "75vw" }}>
+    <div style={{ width: "100%" }}>
       <div
         className="Chart__wrapper"
         // @ts-ignore

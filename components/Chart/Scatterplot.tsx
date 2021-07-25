@@ -8,7 +8,7 @@ import { Axis } from "./Axis";
 import { Line } from "./Line";
 
 const chartSettings = {
-  marginLeft: 75,
+  marginLeft: 25,
   marginRight: 25,
   marginTop: 25,
   marginBottom: 25,
@@ -40,7 +40,7 @@ export function Scatterplot({ data }: { data: ChartData }) {
   }, [yIntercept, data, slope]);
 
   return (
-    <div style={{ width: "75vw" }}>
+    <div style={{ width: "100%" }}>
       <div
         className="Chart__wrapper"
         // @ts-ignore

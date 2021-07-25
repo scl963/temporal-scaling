@@ -1,94 +1,30 @@
 import Head from "next/head";
 import Image from "next/image";
-import React, { ChangeEvent } from "react";
-import { LineChart } from "../components/Chart/LineChart";
-import { Scatterplot } from "../components/Chart/Scatterplot";
-import styles from "../styles/Home.module.css";
-import { generateRandomWalkData } from "../utils/generateRandomWalkData";
+import React from "react";
 import coarseCoastline from "../public/fractal-coastline-100km.png";
 import fineCoastline from "../public/fractal-coastline-50km.png";
+import styles from "../styles/Home.module.css";
+import dynamic from "next/dynamic";
 
-type MeasurementOption = "1" | "2" | "5" | "10" | "20" | "50" | "100" | "200";
-
-const measurementOptions: MeasurementOption[] = [
-  "1",
-  "2",
-  "5",
-  "10",
-  "20",
-  "50",
-  "100",
-  "200",
-];
+const DynamicChartSection = dynamic(
+  () => import("../components/Chart/ChartSection"),
+  {
+    ssr: false,
+  }
+);
 
 export default function Home() {
-  const [randomWalkData, setRandomWalkData] = React.useState(() =>
-    generateRandomWalkData()
-  );
-  const [selectedMeasurementOption, setSelectedMeasurementOption] =
-    React.useState<MeasurementOption>(measurementOptions[0]);
-  const [logTenData, setlogTenData] = React.useState(new Map());
-
-  const logTenGraphData = React.useMemo(() => {
-    let graphData: { x: number; y: number }[] = [];
-    logTenData.forEach(({ logTenRate, logTenDuration }, key) =>
-      graphData.push({
-        x: logTenDuration,
-        y: logTenRate,
-      })
-    );
-    return graphData.sort((a, b) => a.x - b.x);
-  }, [logTenData]);
-
-  const regenerateData = () => {
-    const newData = generateRandomWalkData();
-    setRandomWalkData(newData);
-    setlogTenData(new Map());
-  };
-
-  const handleMeasurementOptionChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedMeasurementOption(e.target.value as MeasurementOption);
-  };
-
-  React.useEffect(() => {
-    if (!logTenData.has(selectedMeasurementOption)) {
-      let rates = [];
-      for (
-        let i = Number(selectedMeasurementOption);
-        i < randomWalkData.length;
-        i += Number(selectedMeasurementOption)
-      ) {
-        const prevPointIndex = i - Number(selectedMeasurementOption);
-        const prevPoint = randomWalkData[prevPointIndex];
-        const currPoint = randomWalkData[i];
-        const rate =
-          Math.abs(currPoint.y - prevPoint.y) /
-          Math.abs(currPoint.x - prevPoint.x);
-        rates.push(rate);
-      }
-
-      const avgRate = rates.reduce((a, b) => a + b, 0) / rates.length;
-      const logTenDuration = Math.log10(Number(selectedMeasurementOption));
-      const logTenRate = Math.log10(avgRate);
-
-      const newDataPoint = { logTenRate, logTenDuration };
-      const newLogTenData = new Map(logTenData);
-      newLogTenData.set(selectedMeasurementOption, newDataPoint);
-      setlogTenData(newLogTenData);
-    }
-  }, [selectedMeasurementOption, randomWalkData, logTenData]);
-
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <title>Temporal Scaling</title>
         <meta name="description" content="Temporal Scaling Demo" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1>Temporal Scaling</h1>
-        <article>
+      <main>
+        <article className={styles.article}>
+          <h1 className={styles.title}>Temporal Scaling</h1>
           <p>
             Rates are not, in general, independent of the durations over which
             they are measured. In fact, rates are only independent of the
@@ -116,7 +52,7 @@ export default function Home() {
             and shorter durations produce higher rates. To see why this might be
             the case, consider a spatial analogy: the length of a coastline.
             Mandelbrot (1982) famously posed the “coastline paradox” as follows:
-            as the measuring “stick” we use to measure a shape like a coastline
+            as the “measuring stick” we use to measure a shape like a coastline
             gets smaller, the measured length of the coastline gets bigger. The
             paradox is that this implies that the coastline is infinitely long
             for an infinitesimally small measuring stick!
@@ -132,11 +68,26 @@ export default function Home() {
             the lengths of the lines are analogous to the rates of the
             processes.
           </p>
-          <Image
-            src={coarseCoastline}
-            alt="A map of the coastline of Great Britain, with rulers of 62 miles in length overlaid on the coastline resulting in a coarse measurement and leaving out finer details of the coastline."
-          />
-          <Image src={fineCoastline} alt="" />
+          <div className={styles.imageContainer}>
+            <Image
+              src={coarseCoastline}
+              alt="A map of the coastline of Great Britain, with measuring sticks of 62 miles in length
+            overlaid on the coastline resulting in a coarse (and therefore smaller)
+            measurement and leaving out finer details."
+              loading="lazy"
+              height={347}
+              width={180}
+            />
+            <Image
+              src={fineCoastline}
+              alt="A second map of the coastline of Great Britain,
+             with measuring sticks of 31 miles in length overlaid on the coastline,
+             resulting in a more precise (and longer) measurement of the overall length."
+              loading="lazy"
+              height={347}
+              width={180}
+            />
+          </div>
           <p>
             Two consequences follow from the observation that there is a
             systematic relationship between rates and the durations over which
@@ -170,27 +121,9 @@ export default function Home() {
             mass extinctions (Foote 1994), cultural evolution (Perreault 2012),
             and carbon emissions (Kemp et al. 2015, Gingerich 2019).
           </p>
+          <DynamicChartSection />
         </article>
-        <div className={styles.chartControlContainer}>
-          <h2>Chart Controls</h2>
-          <div className={styles.chartControlContent}>
-            <button onClick={regenerateData}>Generate New Dataset</button>
-            <div className={styles.dropdownContainer}>
-              <label htmlFor="measurement-options">Ruler length</label>
-              <select
-                id="measurement-options"
-                onChange={handleMeasurementOptionChange}
-              >
-                {measurementOptions.map((measurementOption) => (
-                  <option key={measurementOption}>{measurementOption}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-        <LineChart data={randomWalkData} />
-        <Scatterplot data={logTenGraphData} />
       </main>
-    </div>
+    </>
   );
 }
