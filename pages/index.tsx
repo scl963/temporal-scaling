@@ -53,7 +53,31 @@ export default function Home() {
               periods of time and the data we have on these processes are only
               at a relatively low temporal resolution.
             </p>
-            <p>
+          </div>
+          <div className={styles.rightOffset}>
+            <div className={styles.offsetImage}>
+              <div className={styles.imageContainer}>
+                <Image
+                  src={coarseCoastline}
+                  alt="A map of the coastline of Great Britain, with measuring sticks of 62 miles in length
+                overlaid on the coastline resulting in a coarse (and therefore smaller)
+                measurement and leaving out finer details."
+                  loading="lazy"
+                  height={480}
+                  width={250}
+                />
+                <Image
+                  src={fineCoastline}
+                  alt="A second map of the coastline of Great Britain,
+                with measuring sticks of 31 miles in length overlaid on the coastline,
+                resulting in a more precise (and longer) measurement of the overall length."
+                  loading="lazy"
+                  height={480}
+                  width={250}
+                />
+              </div>
+            </div>
+            <p className={styles.offsetTextLeft}>
               In fact, there is a precise relationship between rates and
               durations for non-constant processes: longer durations produce
               lower rates, and shorter durations produce higher rates. To see
@@ -65,26 +89,8 @@ export default function Home() {
               coastline is infinitely long for an infinitesimally small
               measuring stick!
             </p>
-            <div className={styles.imageContainer}>
-              <Image
-                src={coarseCoastline}
-                alt="A map of the coastline of Great Britain, with measuring sticks of 62 miles in length
-            overlaid on the coastline resulting in a coarse (and therefore smaller)
-            measurement and leaving out finer details."
-                loading="lazy"
-                height={347}
-                width={180}
-              />
-              <Image
-                src={fineCoastline}
-                alt="A second map of the coastline of Great Britain,
-             with measuring sticks of 31 miles in length overlaid on the coastline,
-             resulting in a more precise (and longer) measurement of the overall length."
-                loading="lazy"
-                height={347}
-                width={180}
-              />
-            </div>
+          </div>
+          <div className={styles.textWrapper}>
             <p>
               This apparent paradox arises because shapes like coastlines have a
               so-called “fractal dimension” greater than 1 (straight lines have
@@ -111,9 +117,18 @@ export default function Home() {
               “temporal scaling.”
             </p>
           </div>
-          <div className={styles.offsetImageParagraph}>
+          <div className={styles.leftOffset}>
             <div className={styles.offsetImage}>
-              <Image src={randomData} alt="" width={480} height={320} />
+              <Image
+                src={randomData}
+                alt="A graph of rain gauge data with both axes using logarithmic
+              scales to show the relationship between rates of change and the measurement duration.
+              A best fit line slopes down and to the right, indicating that as the measurement duration increases,
+              the rate of change seems to decrease."
+                width={480}
+                height={320}
+                loading="lazy"
+              />
             </div>
             <p className={styles.offsetText}>
               Second, we can use temporal scaling to compare rate data collected

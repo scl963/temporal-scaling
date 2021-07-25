@@ -12,6 +12,7 @@
 .imageContainer {
   display: flex;
   flex-direction: row;
+  flex-wrap: nowrap;
   float: right;
   justify-content: center;
 }
@@ -65,16 +66,24 @@
   }
 
   .offsetText {
-    flex: 1 2s 50%;
+    flex: 1 2 50%;
     margin: 0;
     padding-right: 9rem;
   }
 
+  .offsetTextLeft {
+    composes: offsetText;
+    padding-right: 0;
+    padding-left: 9.5rem;
+  }
+
   .leftOffset {
+    composes: offsetImageParagraph;
     flex-direction: row;
   }
 
   .rightOffset {
+    composes: offsetImageParagraph;
     flex-direction: row-reverse;
   }
 }
