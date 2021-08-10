@@ -1,12 +1,12 @@
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import Image from "next/image";
 import React from "react";
-import coarseCoastline from "../public/fractal-coastline-100km.png";
-import fineCoastline from "../public/fractal-coastline-50km.png";
-import sedimentaryRock from "../public/sedimentary_rock_cropped.jpg";
-import randomData from "../public/random_data.jpg";
+import coarseCoastline from "../images/fractal-coastline-100km.png";
+import fineCoastline from "../images/fractal-coastline-50km.png";
+import randomData from "../images/random_data.jpg";
+import sedimentaryRock from "../images/sedimentary_rock_cropped.jpg";
 import styles from "../styles/Home.module.css";
-import dynamic from "next/dynamic";
 
 const DynamicChartSection = dynamic(
   () => import("../components/Chart/ChartSection"),
@@ -36,22 +36,28 @@ export default function Home() {
               Rates are not, in general, independent of the durations over which
               they are measured. In fact, rates are only independent of the
               durations over which they are measured for constant rates, i.e.,
-              rates that do not change over time. If I am driving on the highway
-              at a particular, constant speed, then we can measure that speed by
-              taking any distance that I cover and the time it takes me to cover
-              that distance and dividing the distance by the time; in this case,
-              it won’t matter which distance, or which time we use, the
-              calculated rate will be the same.
+              rates that do not change over time.
+            </p>
+            <p>
+              If I am driving on the highway at a particular, constant speed,
+              then we can measure that speed by taking any distance that I cover
+              and the time it takes me to cover that distance and dividing the
+              distance by the time; in this case, it won’t matter which
+              distance, or which time we use, the calculated rate will be the
+              same.
             </p>
             <p>
               However, many processes, especially natural processes, do not
               change at a constant rate. For processes with “ups and downs,” the
               rates at which those processes occur will depend on the durations
-              over which those rates are measured. This dependence of rates on
-              durations is especially important in the historical sciences (like
-              paleontology and geology), where processes happen over very long
-              periods of time and the data we have on these processes are only
-              at a relatively low temporal resolution.
+              over which those rates are measured.
+            </p>
+            <p>
+              This dependence of rates on durations is especially important in
+              the historical sciences (like paleontology and geology), where
+              processes happen over very long periods of time and the data we
+              have on these processes are only at a relatively low temporal
+              resolution.
             </p>
           </div>
           <div className={styles.rightOffset}>
@@ -101,16 +107,32 @@ export default function Home() {
             <p>
               Two consequences follow from the observation that there is a
               systematic relationship between rates and the durations over which
-              they are measured. First, this systematic relationship can be used
-              to extrapolate from rates over durations which were used to
-              measure the rates to what the rates would have been had we
-              measured them over different durations. For example, if we only
-              have rate data at 1,000-year resolution for some time period in
-              the past, we can extrapolate to what the rate would have been if
-              we had data at 10-year or even 1-year resolution. (The rates over
-              1-year durations will be significantly higher than the rates over
-              1,000-year durations.) This extrapolation procedure is called
-              “temporal scaling.”
+              they are measured:
+              <ol className={styles.orderedList}>
+                <li>
+                  This systematic relationship can be used to extrapolate from
+                  rates over durations which were used to measure the rates to
+                  what the rates would have been had we measured them over
+                  different durations. For example, if we only have rate data at
+                  1,000-year resolution for some time period in the past, we can
+                  extrapolate to what the rate <em>would</em> have been if we
+                  had data at 10-year or even 1-year resolution. (The rates over
+                  1-year durations will be significantly higher than the rates
+                  over 1,000-year durations.) This extrapolation procedure is
+                  called “temporal scaling.”
+                </li>
+                <li>
+                  <p>
+                    We can use temporal scaling to compare rate data collected
+                    over different durations. For example, if we have
+                    contemporary data collected over short durations (annual,
+                    decadal, etc.), and paleodata collected over longer
+                    durations, we can extrapolate from the paleodata to get what
+                    the rates would have been over the same time durations used
+                    for the contemporary data.
+                  </p>
+                </li>
+              </ol>
             </p>
           </div>
           <div className={styles.leftOffset}>
@@ -125,16 +147,6 @@ export default function Home() {
               />
             </div>
             <p className={styles.offsetText}>
-              Second, we can use temporal scaling to compare rate data collected
-              over different durations. For example, if we have contemporary
-              data collected over short durations (annual, decadal, etc.), and
-              paleodata collected over longer durations, we can extrapolate from
-              the paleodata to get what the rates would have been over the same
-              time durations used for the contemporary data.
-            </p>
-          </div>
-          <div className={styles.textWrapper}>
-            <p>
               Philip Gingerich (1983, 1984, 1985, 1993, 2001) used the
               dependence of rates on durations to argue against Eldredge and
               Gould (1972)’s theory of punctuated equilibria; Gingerich thought
@@ -145,6 +157,25 @@ export default function Home() {
               to sedimentation (Sadler 1981, 1993), mass extinctions (Foote
               1994), cultural evolution (Perreault 2012), and carbon emissions
               (Kemp et al. 2015, Gingerich 2019).
+            </p>
+          </div>
+          <div className={styles.textWrapper}>
+            <p>
+              One easy way to visualize temporal scaling is to think about a
+              rain gauge. The height of the water in a rain gauge is a product
+              of both precipitation and evaporation, so the water height will
+              exhibit the characteristic &quot;ups and downs&ldquo; of a process
+              for which rates depend on durations.
+            </p>
+            <p>
+              I collected rain gauge data every day at around the same time for
+              60 days in my backyard during the summer of 2020. In Boston, the
+              rate of precipitation is higher than the rate of evaporation, so
+              the rain gauge filled up slowly over time. If we plot the data as
+              rates (y-axis) for different durations (x-axis), on a log-log
+              scale, we see that the rates depend on the durations: for higher
+              durations, the rate is lower, and for lower durations, the rate is
+              higher.
             </p>
           </div>
           <DynamicChartSection />

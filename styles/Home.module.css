@@ -2,7 +2,8 @@
   max-width: 70rem;
   margin: auto;
   padding: 1rem;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
+  line-height: 1.875rem;
 }
 
 .textWrapper {
@@ -22,6 +23,10 @@
   font-size: 4rem;
   line-height: 1.15;
   text-align: center;
+}
+
+.orderedList {
+  padding-inline-start: 0;
 }
 
 @media screen and (min-width: 680px) {
